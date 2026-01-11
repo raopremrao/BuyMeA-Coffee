@@ -33,6 +33,8 @@ async function fund() {
             transport: custom(window.ethereum)
         })
 
+        await publicClient.simulateContract({})
+
     } else {
         connectButton.innerHTML = "Please Install MetaMask";
     }    
