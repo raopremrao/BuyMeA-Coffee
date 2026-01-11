@@ -1,8 +1,5 @@
 import {createWalletClient, custom} from "https://esm.sh/viem"
 
-console.log(createWalletClient);
-
-
 const connectButton = document.getElementById("connectButton");
 
 let walletClient;
