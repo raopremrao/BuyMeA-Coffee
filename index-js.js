@@ -5,7 +5,7 @@ const connectButton = document.getElementById("connectButton");
 const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount"); 
 
-console.log(createWalletClient);
+// console.log(createWalletClient);
 
 
 let walletClient;
@@ -21,6 +21,9 @@ async function connect() {
     } else {
         connectButton.innerHTML = "Please Install MetaMask";
     }
+
+    console.log("Hello");
+    
 }
 
 async function fund() {
@@ -38,7 +41,7 @@ async function fund() {
             transport: custom(window.ethereum)
         })
 
-        await publicClient.simulateContract({
+        const {request} = await publicClient.simulateContract({
             address: contractAddress,
             abi: abi,
             functionName: "fund",
@@ -46,6 +49,13 @@ async function fund() {
             chain: currentChain,
             value: parseEther(ethAmount),
         })
+
+        console.log("Done Simulating");
+        
+
+        const hash = await walletClient.writeContract(request)
+        console.log(hash);
+                
 
     } else {
         connectButton.innerHTML = "Please Install MetaMask";
