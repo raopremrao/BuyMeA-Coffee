@@ -1,0 +1,20 @@
+{
+  "name": "BuyMeA-Coffee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.0",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "viem": "^2.44.4"
+  },
+  "dependencies": {
+    "vite": "^7.3.1"
+  }
+}
