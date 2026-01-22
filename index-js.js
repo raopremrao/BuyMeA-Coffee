@@ -13,9 +13,11 @@ const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount");
 const balanceButton = document.getElementById("balanceButton");
 const withdrawButton = document.getElementById("withdrawButton");
+const getAddressToAmountFunded = document.getElementById("getAddressToAmountFunded");
 
 // console.log(createWalletClient);
 
+let fundingAddress;
 let walletClient;
 let publicClient;
 
@@ -24,7 +26,8 @@ async function connect() {
     walletClient = createWalletClient({
       transport: custom(window.ethereum),
     });
-    await walletClient.requestAddresses();
+    const [account] = await walletClient.requestAddresses()
+    fundingAddress = account;
     connectButton.innerHTML = "Connected";
   } else {
     connectButton.innerHTML = "Please Install MetaMask";
@@ -126,14 +129,33 @@ async function withdraw() {
       const hash = await walletClient.writeContract(request)
       console.log("Transaction processed: ", hash)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
+      console.error("Withdraw error:", error) // Use console.error for better visibility
     }
   } else {
     withdrawButton.innerHTML = "Please install MetaMask"
   }
 }
 
+async function FnGetAddressToAmountFunded() {
+  publicClient = createPublicClient({
+    transport: custom(window.ethereum),
+  });
+
+  const data = await publicClient.readContract({
+    address: contractAddress,
+    abi,
+    functionName: 'getAddressToAmountFunded',
+    args: [fundingAddress ],
+  })
+
+  console.log("Amount Funded: ", formatEther(data), "ETH");
+  
+
+}
+
 connectButton.onclick = connect;
 fundButton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawButton.onclick = withdraw;
+getAddressToAmountFunded.onclick = FnGetAddressToAmountFunded;
